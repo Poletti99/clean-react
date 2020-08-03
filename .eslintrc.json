@@ -57,7 +57,10 @@
     "class-methods-use-this": "off",
     "import/no-extraneous-dependencies": "off",
     "react/destructuring-assignment": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "import/no-cycle": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-useless-constructor": "off"
   },
   "settings": {
     "react": {
