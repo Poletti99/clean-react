@@ -25,7 +25,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
   };
 };
 
-describe('RemoteAuthentication', () => {
+describe('RemoteAddAccount', () => {
   test('should call HttpPostClient with correct url', async () => {
     const url = faker.internet.url();
     const { sut, httpPostClientSpy } = makeSut(url);
