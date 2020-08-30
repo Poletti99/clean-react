@@ -27,7 +27,7 @@ Props) => {
     email: '',
     password: '',
     nameError: '',
-    emailError: 'Campo obrigatório',
+    emailError: '',
     passwordError: 'Campo obrigatório',
     passwordConfirmationError: 'Campo obrigatório',
     mainError: '',
@@ -37,8 +37,9 @@ Props) => {
     setState(oldState => ({
       ...oldState,
       nameError: validation.validate('name', state.name),
+      emailError: validation.validate('email', state.email),
     }));
-  }, [state.name, validation]);
+  }, [state.name, state.email, validation]);
 
   return (
     <div className={Styles.signup}>
