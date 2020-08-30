@@ -58,23 +58,31 @@ Props) => {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
-    event.preventDefault();
-    if (
-      state.isLoading ||
-      state.nameError ||
-      state.emailError ||
-      state.passwordConfirmationError ||
-      state.passwordError
-    )
-      return;
+    try {
+      event.preventDefault();
+      if (
+        state.isLoading ||
+        state.nameError ||
+        state.emailError ||
+        state.passwordConfirmationError ||
+        state.passwordError
+      )
+        return;
 
-    setState({ ...state, isLoading: true });
-    await addAccount.add({
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation,
-    });
+      setState({ ...state, isLoading: true });
+      await addAccount.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation,
+      });
+    } catch (error) {
+      setState({
+        ...state,
+        isLoading: false,
+        mainError: error.message,
+      });
+    }
   };
 
   return (
