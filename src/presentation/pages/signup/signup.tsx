@@ -59,7 +59,14 @@ Props) => {
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
-    if (state.isLoading) return;
+    if (
+      state.isLoading ||
+      state.nameError ||
+      state.emailError ||
+      state.passwordConfirmationError ||
+      state.passwordError
+    )
+      return;
 
     setState({ ...state, isLoading: true });
     await addAccount.add({
