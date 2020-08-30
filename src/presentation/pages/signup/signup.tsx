@@ -28,7 +28,7 @@ Props) => {
     password: '',
     nameError: '',
     emailError: '',
-    passwordError: 'Campo obrigatório',
+    passwordError: '',
     passwordConfirmationError: 'Campo obrigatório',
     mainError: '',
   });
@@ -38,8 +38,9 @@ Props) => {
       ...oldState,
       nameError: validation.validate('name', state.name),
       emailError: validation.validate('email', state.email),
+      passwordError: validation.validate('password', state.password),
     }));
-  }, [state.name, state.email, validation]);
+  }, [state.name, state.email, state.password, validation]);
 
   return (
     <div className={Styles.signup}>
