@@ -8,16 +8,18 @@ import {
 } from '@/presentation/components';
 import Context from '@/presentation/contexts/form/form-context';
 import { Validation } from '@/presentation/protocols/validation';
+import { AddAccount } from '@/domain/usecases';
 import Styles from './signup-styles.scss';
 
 type Props = {
   validation: Validation;
-  // authentication: Authentication;
+  addAccount: AddAccount;
   // saveAccessToken: SaveAccessToken;
 };
 
 const SignUp: React.FC<Props> = ({
   validation,
+  addAccount,
 }: // authentication,
 // saveAccessToken,
 Props) => {
@@ -58,6 +60,12 @@ Props) => {
   ): Promise<void> => {
     event.preventDefault();
     setState({ ...state, isLoading: true });
+    await addAccount.add({
+      name: state.name,
+      email: state.email,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation,
+    });
   };
 
   return (
