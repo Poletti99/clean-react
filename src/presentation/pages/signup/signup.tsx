@@ -5,6 +5,7 @@ import {
   FormStatus,
   Input,
   LoginHeader,
+  SubmitButton,
 } from '@/presentation/components';
 import Context from '@/presentation/contexts/form/form-context';
 import { Validation } from '@/presentation/protocols/validation';
@@ -25,6 +26,7 @@ const SignUp: React.FC<Props> = ({
   const history = useHistory();
   const [state, setState] = useState({
     isLoading: false,
+    isFormInvalid: true,
     name: '',
     email: '',
     password: '',
@@ -37,15 +39,25 @@ const SignUp: React.FC<Props> = ({
   });
 
   useEffect(() => {
+    const nameError = validation.validate('name', state.name);
+    const emailError = validation.validate('email', state.email);
+    const passwordError = validation.validate('password', state.password);
+    const passwordConfirmationError = validation.validate(
+      'passwordConfirmation',
+      state.passwordConfirmation,
+    );
+
     setState(oldState => ({
       ...oldState,
-      nameError: validation.validate('name', state.name),
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
-      passwordConfirmationError: validation.validate(
-        'passwordConfirmation',
-        state.passwordConfirmation,
-      ),
+      nameError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+      isFormInvalid:
+        !!nameError ||
+        !!emailError ||
+        !!passwordConfirmationError ||
+        !!passwordError,
     }));
   }, [
     state.name,
@@ -60,14 +72,7 @@ const SignUp: React.FC<Props> = ({
   ): Promise<void> => {
     try {
       event.preventDefault();
-      if (
-        state.isLoading ||
-        state.nameError ||
-        state.emailError ||
-        state.passwordConfirmationError ||
-        state.passwordError
-      )
-        return;
+      if (state.isLoading || state.isFormInvalid) return;
 
       setState({ ...state, isLoading: true });
       const account = await addAccount.add({
@@ -109,20 +114,7 @@ const SignUp: React.FC<Props> = ({
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.nameError ||
-              !!state.emailError ||
-              !!state.passwordError ||
-              !!state.passwordConfirmationError
-            }
-            className={Styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton text="Cadastrar" />
 
           <Link
             data-testid="login-link"
