@@ -79,16 +79,6 @@ describe('Login Page', () => {
     Helper.testStatusForField(sut, 'password', validationError);
   });
 
-  test('Should call Validation with correct password', () => {
-    const { sut, validationSpy } = makeSut();
-    const password = faker.internet.password();
-    const passwordInput = sut.getByTestId('password');
-
-    fireEvent.input(passwordInput, { target: { value: password } });
-    expect(validationSpy.fieldName).toEqual('password');
-    expect(validationSpy.fieldValue).toEqual(password);
-  });
-
   test('Should show email error if Validation fails', () => {
     const validationError = faker.random.words();
     const { sut } = makeSut({ validationError });
