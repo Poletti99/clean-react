@@ -16,7 +16,7 @@ import faker from 'faker';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { EmailInUseError } from '@/domain/errors';
-import SignUp from './signup';
+import { SignUp } from '@/presentation/pages';
 
 type SutTypes = {
   sut: RenderResult;
