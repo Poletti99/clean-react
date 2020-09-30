@@ -84,4 +84,11 @@ describe('SignUp', () => {
     FormHelper.testMainError('Algo de errado não está certo.');
     FormHelper.testUrl('/signup');
   });
+
+  it('should present UnexpectedError if invalid data is returned', () => {
+    Http.mockInvalidData();
+    simulateValidSubmit();
+    FormHelper.testMainError('Algo de errado não está certo.');
+    FormHelper.testUrl('/signup');
+  });
 });
